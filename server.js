@@ -11,6 +11,6 @@ const app = require("./app");
       console.log(`Server is running on port ${process.env.PORT}`);
     });
   } catch (error) {
-    console.error("Server Error:", error);
+    console.error("Server Error:", error.toString());
   }
 })();
