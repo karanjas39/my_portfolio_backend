@@ -2,6 +2,8 @@ module.exports = { login_user };
 
 async function login_user(req, res) {
   try {
+    let { data } = req.body;
+
     res.send({
       success: true,
       status: 200,
