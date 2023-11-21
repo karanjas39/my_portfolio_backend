@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const User = require("../MODELS/user.model");
 const constants = require("../CONTROLLERS/constants");
 
 module.exports = { verifyAdmin };
@@ -34,16 +33,6 @@ async function verifyAdmin(req, res, next) {
         success: false,
         status: 400,
         message: constants.tokenExpired,
-      });
-    }
-
-    let isUser = await User.findOne({ admin: true });
-
-    if (!isUser._id.equals(decoded._id)) {
-      return res.send({
-        success: false,
-        status: 400,
-        message: constants.unauthorizedAccess,
       });
     }
     next();
