@@ -17,9 +17,17 @@ const developerNotFound =
 
 // ROLES
 const roleNotCreated = "New Role cannot be created.";
+const roleAlreadyCreated = "Role is already created.";
 const noRoleFound = "No role found.";
 const roleDeleted = "Role deleted successfully.";
 const roleUpdated = "Role updated successfully.";
+
+// SKILLS
+const skillNotCreated = "New skill cannot be created.";
+const skillAlreadyCreated = "Skill is already created.";
+const noSkillFound = "No skill found.";
+const skillDeleted = "Skill deleted successfully.";
+const skillUpdated = "Skill updated successfully.";
 
 // GENERAL
 const _idRequired = "_id is required";
@@ -33,7 +41,13 @@ module.exports = {
   developerNotFound,
   _idRequired,
   roleNotCreated,
+  roleAlreadyCreated,
   noRoleFound,
   roleDeleted,
   roleUpdated,
+  skillDeleted,
+  skillNotCreated,
+  skillUpdated,
+  noSkillFound,
+  skillAlreadyCreated,
 };

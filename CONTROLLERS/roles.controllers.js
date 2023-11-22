@@ -15,6 +15,18 @@ async function createRole(req, res) {
       });
     }
 
+    let isRole = await Roles.findOne({
+      name: { $regex: new RegExp(name, "i") },
+    });
+
+    if (!!isRole) {
+      return res.send({
+        success: false,
+        status: 400,
+        message: constants.roleAlreadyCreated,
+      });
+    }
+
     let role = await Roles.create({ name });
 
     if (!role) {
