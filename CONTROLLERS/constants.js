@@ -15,6 +15,12 @@ const tokenExpired = "Authentication token has expired.";
 const developerNotFound =
   "Developer not found. Please check the provided information and try again.";
 
+// ROLES
+const roleNotCreated = "New Role cannot be created.";
+const noRoleFound = "No role found.";
+const roleDeleted = "Role deleted successfully.";
+const roleUpdated = "Role updated successfully.";
+
 // GENERAL
 const _idRequired = "_id is required";
 
@@ -26,4 +32,8 @@ module.exports = {
   tokenExpired,
   developerNotFound,
   _idRequired,
+  roleNotCreated,
+  noRoleFound,
+  roleDeleted,
+  roleUpdated,
 };
