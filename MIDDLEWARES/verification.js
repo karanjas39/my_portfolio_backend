@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require(".././MODELS/user.model");
-const constants = require("../CONTROLLERS/constants");
+const constants = require("../UTILS/constants");
 
 module.exports = { tokenVerification, verifyAdmin };
 

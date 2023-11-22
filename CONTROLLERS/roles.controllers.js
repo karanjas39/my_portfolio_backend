@@ -1,6 +1,6 @@
 // @collapse
 const Roles = require(".././MODELS/roles.model");
-const constants = require("./constants");
+const constants = require("../UTILS/constants");
 
 module.exports = { createRole, allRoles, deleteRole, updateRole };
 

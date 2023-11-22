@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const util_controllers = require(".././CONTROLLERS/utils.controllers");
+const unhandledRoutes = require(".././UTILS/unhandledRoutes");
 const user_controllers = require(".././CONTROLLERS/user.controllers");
 const developer_controllers = require(".././CONTROLLERS/developer.controllers");
 const role_controllers = require(".././CONTROLLERS/roles.controllers");
@@ -39,6 +39,6 @@ router
 // SKILLS ROUTES
 
 // UNHANDLES ROUTES
-router.route("*").all(util_controllers.unhandleRoutes);
+router.route("*").all(unhandledRoutes.unhandleRoutes);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const Developer = require(".././MODELS/developer.model");
-const constants = require("./constants");
+const constants = require("../UTILS/constants");
 
 module.exports = { getDeveloperDetails, updateDeveloperDetails };
 

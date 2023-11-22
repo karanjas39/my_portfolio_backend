@@ -6,7 +6,7 @@ const cors = require("cors");
 const adminRouter = require("./ROUTES/admin");
 const userRouter = require("./ROUTES/user");
 
-const util_controllers = require("./CONTROLLERS/utils.controllers");
+const unhandledRoutes = require("./UTILS/unhandledRoutes");
 
 // CONFIGURATION
 app.use(
@@ -22,6 +22,6 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/user", userRouter);
 
 // UNHANDLES ROUTES
-app.route("*").all(util_controllers.unhandleRoutes);
+app.route("*").all(unhandledRoutes.unhandleRoutes);
 
 module.exports = app;
