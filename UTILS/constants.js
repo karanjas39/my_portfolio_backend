@@ -29,6 +29,13 @@ const noSkillFound = "No skill found.";
 const skillDeleted = "Skill deleted successfully.";
 const skillUpdated = "Skill updated successfully.";
 
+// EXPERIENCE
+const expNotCreated = "New Experience cannot be created.";
+const expAlreadyCreated = "This Experience is already created.";
+const noExpFound = "No experience found.";
+const expDeleted = "Experience deleted successfully.";
+const expUpdated = "Experience updated successfully.";
+
 // GENERAL
 const _idRequired = "_id is required";
 
@@ -50,4 +57,9 @@ module.exports = {
   skillUpdated,
   noSkillFound,
   skillAlreadyCreated,
+  noExpFound,
+  expAlreadyCreated,
+  expNotCreated,
+  expDeleted,
+  expUpdated,
 };

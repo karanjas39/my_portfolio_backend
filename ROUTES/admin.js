@@ -6,6 +6,7 @@ const user_controllers = require(".././CONTROLLERS/user.controllers");
 const developer_controllers = require(".././CONTROLLERS/developer.controllers");
 const role_controllers = require(".././CONTROLLERS/roles.controllers");
 const skills_controllers = require(".././CONTROLLERS/skill.controllers");
+const experience_controllers = require(".././CONTROLLERS/experience.controllers");
 
 const middlewares = require(".././MIDDLEWARES/verification");
 
@@ -51,6 +52,20 @@ router
 router
   .route("/developer/skill/update")
   .post(middlewares.verifyAdmin, skills_controllers.updateSkill);
+
+// EXPERIENCE ROUTES
+router
+  .route("/developer/experience/all")
+  .get(experience_controllers.getAllExperience);
+router
+  .route("/developer/experience/add")
+  .post(middlewares.verifyAdmin, experience_controllers.createExperience);
+router
+  .route("/developer/experience/update")
+  .post(middlewares.verifyAdmin, experience_controllers.updateExperience);
+router
+  .route("/developer/experience/delete")
+  .post(middlewares.verifyAdmin, experience_controllers.deleteExperience);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);
