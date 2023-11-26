@@ -36,6 +36,13 @@ const noExpFound = "No experience found.";
 const expDeleted = "Experience deleted successfully.";
 const expUpdated = "Experience updated successfully.";
 
+// EDUCATION
+const eduNotCreated = "New Education cannot be created.";
+const eduAlreadyCreated = "This Education is already created.";
+const noEduFound = "No Education found.";
+const eduDeleted = "Education deleted successfully.";
+const eduUpdated = "Education updated successfully.";
+
 // GENERAL
 const _idRequired = "_id is required";
 
@@ -62,4 +69,9 @@ module.exports = {
   expNotCreated,
   expDeleted,
   expUpdated,
+  eduNotCreated,
+  eduAlreadyCreated,
+  noEduFound,
+  eduDeleted,
+  eduUpdated,
 };

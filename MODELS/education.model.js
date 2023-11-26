@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const experienceSchema = mongoose.Schema(
+const educationSchema = mongoose.Schema(
   {
     from: {
       type: Number,
@@ -10,8 +10,9 @@ const experienceSchema = mongoose.Schema(
     to: {
       type: Number,
       default: new Date().getFullYear(),
+      required: true,
     },
-    role: {
+    institute: {
       type: String,
       default: "",
       required: true,
@@ -24,6 +25,6 @@ const experienceSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const experience = mongoose.model("experience", experienceSchema);
+const education = mongoose.model("education", educationSchema);
 
-module.exports = experience;
+module.exports = education;

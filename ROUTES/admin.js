@@ -7,6 +7,7 @@ const developer_controllers = require(".././CONTROLLERS/developer.controllers");
 const role_controllers = require(".././CONTROLLERS/roles.controllers");
 const skills_controllers = require(".././CONTROLLERS/skill.controllers");
 const experience_controllers = require(".././CONTROLLERS/experience.controllers");
+const edu_controllers = require(".././CONTROLLERS/education.controllers");
 
 const middlewares = require(".././MIDDLEWARES/verification");
 
@@ -66,6 +67,18 @@ router
 router
   .route("/developer/experience/delete")
   .post(middlewares.verifyAdmin, experience_controllers.deleteExperience);
+
+// EDUCATION ROUTES
+router.route("/developer/education/all").get(edu_controllers.getAllEducation);
+router
+  .route("/developer/education/add")
+  .post(middlewares.verifyAdmin, edu_controllers.createEducation);
+router
+  .route("/developer/education/update")
+  .post(middlewares.verifyAdmin, edu_controllers.updateEducation);
+router
+  .route("/developer/education/delete")
+  .post(middlewares.verifyAdmin, edu_controllers.deleteEducation);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);

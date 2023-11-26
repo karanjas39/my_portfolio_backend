@@ -1,24 +1,24 @@
-// @collapse
-const Experience = require(".././MODELS/experience.model");
+const Education = require(".././MODELS/education.model");
 const constants = require(".././UTILS/constants");
 
 module.exports = {
-  createExperience,
-  deleteExperience,
-  updateExperience,
-  getAllExperience,
+  createEducation,
+  deleteEducation,
+  updateEducation,
+  getAllEducation,
 };
 
-async function createExperience(req, res) {
+async function createEducation(req, res) {
   try {
-    let { role, from, to } = req.body;
+    let { institute, from, to } = req.body;
     let invalidFields = [];
-    if (!role) {
-      invalidFields.push("role");
+    if (!institute) {
+      invalidFields.push("institute");
     }
     if (!from) {
       invalidFields.push("from");
     }
+
     if (invalidFields.length != 0) {
       return res.send({
         success: false,
@@ -27,44 +27,42 @@ async function createExperience(req, res) {
       });
     }
 
-    let escapedChars = role.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-    let isExp = await Experience.findOne({
-      role: { $regex: new RegExp(escapedChars, "i") },
+    let isEdu = await Education.findOne({
+      institute: { $regex: new RegExp(institute, "i") },
     });
 
-    if (!!isExp) {
+    if (!!isEdu) {
       return res.send({
         success: false,
         status: 400,
-        message: constants.expAlreadyCreated,
+        message: constants.eduAlreadyCreated,
       });
     }
 
-    let exp = await Experience.create({ role, from, to });
+    let edu = await Education.create({ institute, from, to });
 
-    if (!exp) {
+    if (!edu) {
       return res.send({
         success: false,
         status: 400,
-        message: constants.expNotCreated,
+        message: constants.eduNotCreated,
       });
     }
 
     res.send({
       success: true,
       status: 200,
-      exp,
+      edu,
     });
   } catch (error) {
     res.send({
       success: false,
       status: 500,
-      message: `Error: ${error.toString()} in createExperience`,
+      message: `Error: ${error.toString()} in createEducation`,
     });
   }
 }
-async function deleteExperience(req, res) {
+async function deleteEducation(req, res) {
   try {
     let { _id } = req.body;
     if (!_id) {
@@ -75,32 +73,32 @@ async function deleteExperience(req, res) {
       });
     }
 
-    let isExp = await Experience.findOne({ _id });
+    let isEdu = await Education.findOne({ _id });
 
-    if (!isExp) {
+    if (!isEdu) {
       return res.send({
         success: false,
         status: 400,
-        message: constants.noExpFound,
+        message: constants.noEduFound,
       });
     }
 
-    await Experience.deleteOne({ _id });
+    await Education.deleteOne({ _id });
 
     res.send({
       success: true,
       status: 200,
-      message: constants.expDeleted,
+      message: constants.eduDeleted,
     });
   } catch (error) {
     res.send({
       success: false,
       status: 500,
-      message: `Error: ${error.toString()} in deleteExperience`,
+      message: `Error: ${error.toString()} in deleteEducation`,
     });
   }
 }
-async function updateExperience(req, res) {
+async function updateEducation(req, res) {
   try {
     let { _id } = req.body;
     if (!_id) {
@@ -111,53 +109,53 @@ async function updateExperience(req, res) {
       });
     }
 
-    let isExp = await Experience.findOne({ _id });
+    let isEdu = await Education.findOne({ _id });
 
-    if (!isExp) {
+    if (!isEdu) {
       return res.send({
         success: false,
         status: 400,
-        message: constants.noExpFound,
+        message: constants.noEduFound,
       });
     }
 
-    await Experience.updateOne({ _id }, { ...req.body, updatedAt: Date.now() });
+    await Education.updateOne({ _id }, { ...req.body, updatedAt: Date.now() });
 
     res.send({
       success: true,
       status: 200,
-      message: constants.expUpdated,
+      message: constants.eduUpdated,
     });
   } catch (error) {
     res.send({
       success: false,
       status: 500,
-      message: `Error: ${error.toString()} in updateExperience`,
+      message: `Error: ${error.toString()} in updateEducation`,
     });
   }
 }
-async function getAllExperience(req, res) {
+async function getAllEducation(req, res) {
   try {
-    let exps = await Experience.find().sort({ from: -1 });
+    let edus = await Education.find().sort({ from: -1 });
 
-    if (exps.length == 0) {
+    if (edus.length == 0) {
       return res.send({
         success: false,
         status: 400,
-        message: constants.noExpFound,
+        message: constants.noEduFound,
       });
     }
 
     res.send({
       success: true,
       status: 200,
-      exps,
+      edus,
     });
   } catch (error) {
     res.send({
       success: false,
       status: 500,
-      message: `Error: ${error.toString()} in getAllExperience`,
+      message: `Error: ${error.toString()} in getAllEducation`,
     });
   }
 }
