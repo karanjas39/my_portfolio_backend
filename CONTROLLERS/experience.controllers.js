@@ -138,7 +138,9 @@ async function updateExperience(req, res) {
 }
 async function getAllExperience(req, res) {
   try {
-    let exps = await Experience.find().sort({ from: -1 });
+    let { options = "" } = req.body;
+
+    let exps = await Experience.find().sort({ from: -1 }).select(options);
 
     if (exps.length == 0) {
       return res.send({

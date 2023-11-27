@@ -429,7 +429,7 @@ async function updateProjectLinks(req, res) {
 
 async function getAllProject(req, res) {
   try {
-    let { startPoint = 0 } = req.body;
+    let { startPoint = 0, options = "" } = req.body;
 
     let projects = await Project.find()
       .sort({ createdAt: -1 })
@@ -438,7 +438,8 @@ async function getAllProject(req, res) {
       .populate({
         path: "techStack.techId",
         select: "name",
-      });
+      })
+      .select(options);
 
     if (projects.length == 0) {
       return res.send({
@@ -465,7 +466,7 @@ async function getAllProject(req, res) {
 
 async function getProject(req, res) {
   try {
-    let { _id } = req.body;
+    let { _id, options = "" } = req.body;
     if (!_id) {
       return res.send({
         success: false,
@@ -474,10 +475,12 @@ async function getProject(req, res) {
       });
     }
 
-    let isProject = await Project.findOne({ _id }).populate({
-      path: "techStack.techId",
-      select: "name",
-    });
+    let isProject = await Project.findOne({ _id })
+      .populate({
+        path: "techStack.techId",
+        select: "name",
+      })
+      .select(options);
 
     if (!isProject) {
       return res.send({
@@ -502,7 +505,7 @@ async function getProject(req, res) {
 
 async function searchProject(req, res) {
   try {
-    let { query } = req.body;
+    let { query, options = "" } = req.body;
     if (!query) {
       return res.send({
         success: false,
@@ -519,7 +522,7 @@ async function searchProject(req, res) {
         { brief_description: { $regex: regex } },
         { detailed_description: { $regex: regex } },
       ],
-    });
+    }).select(options);
 
     if (projects.length == 0) {
       return res.send({

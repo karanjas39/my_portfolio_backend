@@ -5,7 +5,9 @@ module.exports = { getDeveloperDetails, updateDeveloperDetails };
 
 async function getDeveloperDetails(req, res) {
   try {
-    let developer = await Developer.findOne();
+    let { options = "" } = req.body;
+
+    let developer = await Developer.findOne().select(options);
 
     if (!developer) {
       return res.send({

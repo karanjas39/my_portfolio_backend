@@ -136,7 +136,9 @@ async function updateEducation(req, res) {
 }
 async function getAllEducation(req, res) {
   try {
-    let edus = await Education.find().sort({ from: -1 });
+    let { options = "" } = req.body;
+
+    let edus = await Education.find().sort({ from: -1 }).select(options);
 
     if (edus.length == 0) {
       return res.send({

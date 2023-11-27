@@ -52,7 +52,9 @@ async function createSkill(req, res) {
 
 async function getAllSkills(req, res) {
   try {
-    let skills = await Skill.find().sort({ name: 1 });
+    let { options = "" } = req.body;
+
+    let skills = await Skill.find().sort({ name: 1 }).select(options);
 
     if (skills.length == 0) {
       return res.send({

@@ -53,7 +53,9 @@ async function createRole(req, res) {
 
 async function allRoles(req, res) {
   try {
-    let roles = await Roles.find();
+    let { options = "" } = req.body;
+
+    let roles = await Roles.find().select(options);
 
     if (roles.length == 0) {
       return res.send({

@@ -82,37 +82,39 @@ router
   .post(middlewares.verifyAdmin, edu_controllers.deleteEducation);
 
 // PROJECT ROUTES
-router.route("/developer/project/all").get(project_controllers.getAllProject);
+router.route("/developer/project/all").post(project_controllers.getAllProject);
 router
   .route("/developer/project/search")
-  .get(project_controllers.searchProject);
-router.route("/developer/project/one").get(project_controllers.getProject);
-router.route("/developer/project/add").post(project_controllers.createProject);
+  .post(project_controllers.searchProject);
+router.route("/developer/project/one").post(project_controllers.getProject);
+router
+  .route("/developer/project/add")
+  .post(middlewares.verifyAdmin, project_controllers.createProject);
 router
   .route("/developer/project/delete")
-  .post(project_controllers.deleteProject);
+  .post(middlewares.verifyAdmin, project_controllers.deleteProject);
 router
   .route("/developer/project/update")
-  .post(project_controllers.updateProject);
+  .post(middlewares.verifyAdmin, project_controllers.updateProject);
 
 // PROJECT LINKS ROUTES
 router
   .route("/developer/project/add/link")
-  .post(project_controllers.createProjectLinks);
+  .post(middlewares.verifyAdmin, project_controllers.createProjectLinks);
 router
   .route("/developer/project/update/link")
-  .post(project_controllers.updateProjectLinks);
+  .post(middlewares.verifyAdmin, project_controllers.updateProjectLinks);
 router
   .route("/developer/project/delete/link")
-  .post(project_controllers.deleteProjectLinks);
+  .post(middlewares.verifyAdmin, project_controllers.deleteProjectLinks);
 
 // PROJECT TECH STACK ROUTES
 router
   .route("/developer/project/add/tech")
-  .post(project_controllers.createProjectTech);
+  .post(middlewares.verifyAdmin, project_controllers.createProjectTech);
 router
   .route("/developer/project/delete/tech")
-  .post(project_controllers.deleteProjectTech);
+  .post(middlewares.verifyAdmin, project_controllers.deleteProjectTech);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);
