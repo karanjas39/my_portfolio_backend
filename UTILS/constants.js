@@ -57,8 +57,10 @@ const searchQuery = "Search Query is required.";
 
 // GENERAL
 const _idRequired = "_id is required";
+const tooManyRequests = "Rate limit exceeded. Please try again later.";
 
 module.exports = {
+  tooManyRequests,
   invalidCreds,
   invalidEndpoint,
   unauthorizedAccess,
