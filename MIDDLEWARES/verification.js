@@ -10,7 +10,7 @@ async function tokenVerification(req, res, next) {
     let { authorization } = req.headers;
 
     if (!authorization) {
-      res.send({
+      return res.send({
         success: false,
         status: 404,
         message: constants.tokenRequired,

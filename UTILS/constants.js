@@ -43,6 +43,18 @@ const noEduFound = "No Education found.";
 const eduDeleted = "Education deleted successfully.";
 const eduUpdated = "Education updated successfully.";
 
+// PROJECT
+const projectNotCreated = "New project cannot be created.";
+const projectLinkCreated = "New project link created successfully.";
+const projectTechCreated = "New project Tech Stack is created successfully.";
+const projectAlreadyCreated = "This project is already created.";
+const noProjectFound = "No project found.";
+const projectDeleted = "Project is deleted successfully.";
+const projectLinkDeleted = "Project link deleted successfully.";
+const projectTechDeleted = "Project Tech Stack is deleted successfully.";
+const projectUpdated = "Project updated successfully.";
+const searchQuery = "Search Query is required.";
+
 // GENERAL
 const _idRequired = "_id is required";
 
@@ -74,4 +86,14 @@ module.exports = {
   noEduFound,
   eduDeleted,
   eduUpdated,
+  projectAlreadyCreated,
+  projectLinkCreated,
+  projectTechCreated,
+  projectDeleted,
+  projectLinkDeleted,
+  projectTechDeleted,
+  noProjectFound,
+  projectUpdated,
+  projectNotCreated,
+  searchQuery,
 };
