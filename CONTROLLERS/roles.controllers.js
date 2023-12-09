@@ -16,7 +16,7 @@ async function createRole(req, res) {
     }
 
     let isRole = await Roles.findOne({
-      name: { $regex: new RegExp(name, "i") },
+      name,
     });
 
     if (!!isRole) {

@@ -27,8 +27,7 @@ async function tokenVerification(req, res, next) {
       });
     }
 
-    let isExpired =
-      Number(decoded.iat) + 60 * 60 <= Math.floor(Date.now() / 1000);
+    let isExpired = Date.now() >= decoded.exp * 1000;
 
     if (isExpired) {
       return res.send({
@@ -37,11 +36,14 @@ async function tokenVerification(req, res, next) {
         message: constants.tokenExpired,
       });
     }
+
+    req.body.admin_id = decoded.admin_id;
+    req.body.admin_password = decoded.admin_password;
     next();
   } catch (error) {
     res.send({
       success: false,
-      status: 500,
+      status: 520,
       message: constants.unauthorizedAccess,
     });
   }

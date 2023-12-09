@@ -1,19 +1,15 @@
 const mongoose = require("mongoose");
 
-let developerSchema = mongoose.Schema({
+const socialMediaSchema = mongoose.Schema({
   name: {
     type: String,
     default: "",
   },
-  email: {
+  link: {
     type: String,
     default: "",
   },
-  cv_link: {
-    type: String,
-    default: "",
-  },
-  fileName: {
+  icon: {
     type: String,
     default: "",
   },
@@ -27,6 +23,6 @@ let developerSchema = mongoose.Schema({
   },
 });
 
-let developer = mongoose.model("developer", developerSchema);
+const socialMedia = mongoose.model("socialMedia", socialMediaSchema);
 
-module.exports = developer;
+module.exports = socialMedia;

@@ -9,6 +9,9 @@ const skills_controllers = require(".././CONTROLLERS/skill.controllers");
 const experience_controllers = require(".././CONTROLLERS/experience.controllers");
 const edu_controllers = require(".././CONTROLLERS/education.controllers");
 const project_controllers = require(".././CONTROLLERS/project.controllers");
+const socialMedia_controllers = require(".././CONTROLLERS/socialMedia.controller");
+
+const upload = require(".././UTILS/fileUpload");
 
 const middlewares = require(".././MIDDLEWARES/verification");
 
@@ -24,6 +27,10 @@ router
 router
   .route("/developer/update")
   .post(middlewares.verifyAdmin, developer_controllers.updateDeveloperDetails);
+
+router
+  .route("/developer/cv/upload")
+  .post(upload.single("cv"), developer_controllers.uploadDeveloperCV);
 
 // ROLES ROUTES
 router.route("/developer/role/all").get(role_controllers.allRoles);
@@ -115,6 +122,20 @@ router
 router
   .route("/developer/project/delete/tech")
   .post(middlewares.verifyAdmin, project_controllers.deleteProjectTech);
+
+// SOCIAL MEDIA ROUTES
+router
+  .route("/developer/socialmedia/all")
+  .post(socialMedia_controllers.getSocialMediaLinks);
+router
+  .route("/developer/socialmedia/add")
+  .post(middlewares.verifyAdmin, socialMedia_controllers.createSocialMedia);
+router
+  .route("/developer/socialmedia/delete")
+  .post(middlewares.verifyAdmin, socialMedia_controllers.deleteSocialMedia);
+router
+  .route("/developer/socialmedia/update")
+  .post(middlewares.verifyAdmin, socialMedia_controllers.updateSocialMedia);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);

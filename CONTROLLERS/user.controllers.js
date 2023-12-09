@@ -45,9 +45,13 @@ async function login_user(req, res) {
       });
     }
 
-    let token = jwt.sign({ _id: isUser._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    let token = jwt.sign(
+      { admin_id: isUser._id, admin_password: password },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.send({
       success: true,

@@ -14,6 +14,7 @@ const tokenExpired = "Authentication token has expired.";
 // DEVELOPERS
 const developerNotFound =
   "Developer not found. Please check the provided information and try again.";
+const developerUpdated = "Developer updated successfully.";
 
 // ROLES
 const roleNotCreated = "New Role cannot be created.";
@@ -55,6 +56,13 @@ const projectTechDeleted = "Project Tech Stack is deleted successfully.";
 const projectUpdated = "Project updated successfully.";
 const searchQuery = "Search Query is required.";
 
+// SOCIAL MEDIA
+const socialMediaNotCreated = "New Social Media cannot be created.";
+const socialMediaAlreadyCreated = "This Social Media is already created.";
+const noSocialMediaFound = "No Social Media found.";
+const socialMediaDeleted = "Social Media deleted successfully.";
+const socialMediaUpdated = "Social Media updated successfully.";
+
 // GENERAL
 const _idRequired = "_id is required";
 const tooManyRequests = "Rate limit exceeded. Please try again later.";
@@ -67,6 +75,7 @@ module.exports = {
   tokenRequired,
   tokenExpired,
   developerNotFound,
+  developerUpdated,
   _idRequired,
   roleNotCreated,
   roleAlreadyCreated,
@@ -98,4 +107,9 @@ module.exports = {
   projectUpdated,
   projectNotCreated,
   searchQuery,
+  socialMediaAlreadyCreated,
+  socialMediaDeleted,
+  socialMediaUpdated,
+  noSocialMediaFound,
+  socialMediaNotCreated,
 };

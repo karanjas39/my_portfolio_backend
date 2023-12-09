@@ -5,7 +5,7 @@ function getUrlAndInjectCode(req, res, next) {
     let url = req.originalUrl;
 
     if (url == "/api/v1/user/developer/details") {
-      req.body.options = "name cv_link";
+      req.body.options = "name cv_link fileName";
     } else if (url == "/api/v1/user/developer/role/all") {
       req.body.options = "name";
     } else if (url == "/api/v1/user/developer/skill/all") {
