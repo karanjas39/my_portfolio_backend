@@ -38,7 +38,6 @@ async function tokenVerification(req, res, next) {
     }
 
     req.body.admin_id = decoded.admin_id;
-    req.body.admin_password = decoded.admin_password;
     next();
   } catch (error) {
     res.send({
@@ -52,6 +51,7 @@ async function tokenVerification(req, res, next) {
 async function verifyAdmin(req, res, next) {
   try {
     let { admin_id, admin_password } = req.body;
+
     let invalidFields = [];
     if (!admin_id) {
       invalidFields.push("admin_id");
@@ -65,6 +65,7 @@ async function verifyAdmin(req, res, next) {
         success: false,
         status: 404,
         message: `Required: ${invalidFields.join(", ")}`,
+        body: req.body,
       });
     }
 

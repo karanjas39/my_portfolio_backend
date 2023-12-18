@@ -10,7 +10,7 @@ module.exports = {
 
 async function createEducation(req, res) {
   try {
-    let { institute, from, to } = req.body;
+    let { institute, from, to, current } = req.body;
     let invalidFields = [];
     if (!institute) {
       invalidFields.push("institute");
@@ -39,7 +39,7 @@ async function createEducation(req, res) {
       });
     }
 
-    let edu = await Education.create({ institute, from, to });
+    let edu = await Education.create({ institute, from, to, current });
 
     if (!edu) {
       return res.send({

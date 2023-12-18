@@ -58,15 +58,12 @@ async function updateDeveloperDetails(req, res) {
       });
     }
 
-    let updatedDeveloper = await Developer.updateOne(
-      { _id },
-      { ...req.body, updatedAt: Date.now() }
-    );
+    await Developer.updateOne({ _id }, { ...req.body, updatedAt: Date.now() });
 
     res.send({
       success: true,
       status: 200,
-      updatedDeveloper,
+      message: constants.developerUpdated,
     });
   } catch (error) {
     res.send({

@@ -4,17 +4,14 @@ const projectSchema = mongoose.Schema({
   title: {
     type: String,
     default: "",
-    required: true,
   },
   brief_description: {
     type: String,
     default: "",
-    required: true,
   },
   detailed_description: {
     type: String,
     default: "",
-    required: true,
   },
   links: [
     {
@@ -34,10 +31,21 @@ const projectSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
-
+  contributors: {
+    type: [String],
+    default: [],
+  },
+  startedOn: {
+    type: Date,
+    default: null,
+  },
+  finishedOn: {
+    type: Date,
+    default: null,
+  },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   updatedAt: {
     type: Date,

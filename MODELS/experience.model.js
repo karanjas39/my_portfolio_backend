@@ -8,7 +8,7 @@ const experienceSchema = mongoose.Schema({
   },
   to: {
     type: Number,
-    default: new Date().getFullYear(),
+    default: 0,
   },
   role: {
     type: String,
@@ -19,7 +19,6 @@ const experienceSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
-
   createdAt: {
     type: Date,
     default: Date.now(),

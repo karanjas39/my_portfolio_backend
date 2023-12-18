@@ -8,7 +8,7 @@ const educationSchema = mongoose.Schema({
   },
   to: {
     type: Number,
-    default: new Date().getFullYear(),
+    default: 0,
     required: true,
   },
   institute: {
@@ -20,6 +20,7 @@ const educationSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
+
   createdAt: {
     type: Date,
     default: Date.now(),

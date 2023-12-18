@@ -11,7 +11,7 @@ module.exports = {
 
 async function createExperience(req, res) {
   try {
-    let { role, from, to } = req.body;
+    let { role, from, to, current } = req.body;
     let invalidFields = [];
     if (!role) {
       invalidFields.push("role");
@@ -41,7 +41,7 @@ async function createExperience(req, res) {
       });
     }
 
-    let exp = await Experience.create({ role, from, to });
+    let exp = await Experience.create({ role, from, to, current });
 
     if (!exp) {
       return res.send({

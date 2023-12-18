@@ -14,8 +14,10 @@ async function createSkill(req, res) {
       });
     }
 
+    let escapedChars = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
     let isSkill = await Skill.findOne({
-      name: { $regex: new RegExp(name, "i") },
+      name: { $regex: new RegExp(escapedChars, "i") },
     });
 
     if (!!isSkill) {

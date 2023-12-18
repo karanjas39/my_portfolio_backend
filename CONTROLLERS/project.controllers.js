@@ -430,16 +430,11 @@ async function updateProjectLinks(req, res) {
 async function getAllProject(req, res) {
   try {
     let { startPoint = 0, options = "" } = req.body;
-
     let projects = await Project.find()
-      .sort({ createdAt: -1 })
       .skip(startPoint)
       .limit(5)
-      .populate({
-        path: "techStack.techId",
-        select: "name",
-      })
-      .select(options);
+      .select(options)
+      .sort({ createdAt: -1 });
 
     if (projects.length == 0) {
       return res.send({

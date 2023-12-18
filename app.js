@@ -19,18 +19,18 @@ app.use(
 );
 app.use(express.json({ limit: "12kb" }));
 app.use(express.urlencoded({ extended: true, limit: "12kb" }));
-app.use(
-  rateLimit({
-    windowMs: 10 * 60 * 1000,
-    max: 100,
-    handler: (req, res) => {
-      res.send({
-        status: 400,
-        message: constants.tooManyRequests,
-      });
-    },
-  })
-);
+// app.use(
+//   rateLimit({
+//     windowMs: 10 * 60 * 1000,
+//     max: 100,
+//     handler: (req, res) => {
+//       res.send({
+//         status: 400,
+//         message: constants.tooManyRequests,
+//       });
+//     },
+//   })
+// );
 
 // ROUTES
 app.use("/api/v1/admin", adminRouter);
