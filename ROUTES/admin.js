@@ -10,10 +10,13 @@ const experience_controllers = require(".././CONTROLLERS/experience.controllers"
 const edu_controllers = require(".././CONTROLLERS/education.controllers");
 const project_controllers = require(".././CONTROLLERS/project.controllers");
 const socialMedia_controllers = require(".././CONTROLLERS/socialMedia.controller");
+const sendEmail_controller = require(".././UTILS/sendEmail");
 
 const upload = require(".././UTILS/fileUpload");
 
 const middlewares = require(".././MIDDLEWARES/verification");
+
+router.route("/email").post(sendEmail_controller);
 
 router.route("/login").post(user_controllers.login_user);
 
@@ -89,11 +92,11 @@ router
   .post(middlewares.verifyAdmin, edu_controllers.deleteEducation);
 
 // PROJECT ROUTES
-router.route("/developer/project/all").post(project_controllers.getAllProject);
+router.route("/developer/project/all").get(project_controllers.getAllProject);
 router
   .route("/developer/project/search")
-  .post(project_controllers.searchProject);
-router.route("/developer/project/one").post(project_controllers.getProject);
+  .get(project_controllers.searchProject);
+router.route("/developer/project/one").get(project_controllers.getProject);
 router
   .route("/developer/project/add")
   .post(middlewares.verifyAdmin, project_controllers.createProject);
@@ -103,25 +106,6 @@ router
 router
   .route("/developer/project/update")
   .post(middlewares.verifyAdmin, project_controllers.updateProject);
-
-// PROJECT LINKS ROUTES
-router
-  .route("/developer/project/add/link")
-  .post(middlewares.verifyAdmin, project_controllers.createProjectLinks);
-router
-  .route("/developer/project/update/link")
-  .post(middlewares.verifyAdmin, project_controllers.updateProjectLinks);
-router
-  .route("/developer/project/delete/link")
-  .post(middlewares.verifyAdmin, project_controllers.deleteProjectLinks);
-
-// PROJECT TECH STACK ROUTES
-router
-  .route("/developer/project/add/tech")
-  .post(middlewares.verifyAdmin, project_controllers.createProjectTech);
-router
-  .route("/developer/project/delete/tech")
-  .post(middlewares.verifyAdmin, project_controllers.deleteProjectTech);
 
 // SOCIAL MEDIA ROUTES
 router

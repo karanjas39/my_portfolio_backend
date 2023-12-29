@@ -33,11 +33,12 @@ router
 router.route("/developer/education/all").get(edu_controllers.getAllEducation);
 
 // PROJECT ROUTES
-router.route("/developer/project/all").post(project_controllers.getAllProject);
+router.route("/developer/project/all").get(project_controllers.getAllProject);
 router
   .route("/developer/project/search")
-  .post(project_controllers.searchProject);
-router.route("/developer/project/one").post(project_controllers.getProject);
+  .get(project_controllers.searchProject);
+
+router.route("/developer/project/one").get(project_controllers.getProject);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);

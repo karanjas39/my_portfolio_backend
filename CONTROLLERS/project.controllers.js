@@ -25,6 +25,10 @@ async function createProject(req, res) {
       detailed_description,
       links = [],
       techStack = [],
+      startedOn,
+      finishedOn,
+      contributors,
+      active = true,
     } = req.body;
 
     let invalidFields = [];
@@ -66,6 +70,10 @@ async function createProject(req, res) {
       detailed_description,
       links,
       techStack,
+      contributors,
+      startedOn,
+      finishedOn,
+      active,
     });
 
     if (!project) {
@@ -429,7 +437,7 @@ async function updateProjectLinks(req, res) {
 
 async function getAllProject(req, res) {
   try {
-    let { startPoint = 0, options = "" } = req.body;
+    let { startPoint = 0, options = "" } = req.query;
     let projects = await Project.find()
       .skip(startPoint)
       .limit(5)
@@ -448,7 +456,7 @@ async function getAllProject(req, res) {
       success: true,
       status: 200,
       projects,
-      nextStartPoint: startPoint + 5,
+      nextStartPoint: Number(startPoint) + 5,
     });
   } catch (error) {
     res.send({
@@ -461,7 +469,8 @@ async function getAllProject(req, res) {
 
 async function getProject(req, res) {
   try {
-    let { _id, options = "" } = req.body;
+    let { _id, options = "" } = req.query;
+
     if (!_id) {
       return res.send({
         success: false,
@@ -500,7 +509,7 @@ async function getProject(req, res) {
 
 async function searchProject(req, res) {
   try {
-    let { query, options = "" } = req.body;
+    let { query, options = "", startPoint = 0 } = req.query;
     if (!query) {
       return res.send({
         success: false,
@@ -515,9 +524,15 @@ async function searchProject(req, res) {
       $or: [
         { title: { $regex: regex } },
         { brief_description: { $regex: regex } },
-        { detailed_description: { $regex: regex } },
       ],
-    }).select(options);
+    })
+      .populate({
+        path: "techStack.techId",
+        select: "name",
+      })
+      .skip(startPoint)
+      .limit(5)
+      .select(options);
 
     if (projects.length == 0) {
       return res.send({
@@ -531,6 +546,7 @@ async function searchProject(req, res) {
       success: true,
       status: 200,
       projects,
+      nextStartPoint: Number(startPoint) + 5,
     });
   } catch (error) {
     res.send({

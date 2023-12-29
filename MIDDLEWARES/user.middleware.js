@@ -1,8 +1,11 @@
+const url = require("url");
+
 module.exports = { getUrlAndInjectCode };
 
 function getUrlAndInjectCode(req, res, next) {
   try {
-    let url = req.originalUrl;
+    let url = getOriginalUrlWithoutQueries(req);
+    const query = req.originalUrl.slice(url.length);
 
     if (url == "/api/v1/user/developer/details") {
       req.body.options = "name cv_link fileName";
@@ -19,10 +22,10 @@ function getUrlAndInjectCode(req, res, next) {
       url == "/api/v1/user/developer/project/one" ||
       url == "/api/v1/user/developer/project/search"
     ) {
-      req.body.options =
-        "title brief_description detailed_description links techStack";
+      req.query.options =
+        "title brief_description detailed_description links techStack contributors startedOn finishedOn";
     }
-
+    req.originalUrl = url + query;
     next();
   } catch (error) {
     res.send({
@@ -31,4 +34,10 @@ function getUrlAndInjectCode(req, res, next) {
       message: `Error: ${error.toString()} in getUrlAndInjectCode`,
     });
   }
+}
+
+function getOriginalUrlWithoutQueries(req) {
+  const parsedUrl = url.parse(req.originalUrl);
+  parsedUrl.search = null; // Remove the query parameters
+  return url.format(parsedUrl);
 }
