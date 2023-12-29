@@ -68,6 +68,14 @@ const socialMediaUpdated = "Social Media updated successfully.";
 const _idRequired = "_id is required";
 const tooManyRequests = "Rate limit exceeded. Please try again later.";
 
+// CONTRIBUTION REQUESTS
+const contributionRequestNotCreated =
+  "New contribution request cannot be created.";
+const contributionRequestAlreadyCreated =
+  "This contribution request is already created.";
+const noContributionRequestFound = "No contribution request found.";
+const contributionRequestDeleted = "Contribution request deleted successfully.";
+
 module.exports = {
   tooManyRequests,
   invalidCreds,
@@ -114,4 +122,8 @@ module.exports = {
   socialMediaUpdated,
   noSocialMediaFound,
   socialMediaNotCreated,
+  contributionRequestAlreadyCreated,
+  contributionRequestNotCreated,
+  contributionRequestDeleted,
+  noContributionRequestFound,
 };

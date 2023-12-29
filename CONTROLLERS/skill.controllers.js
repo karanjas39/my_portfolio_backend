@@ -1,4 +1,5 @@
 let Skill = require(".././MODELS/skill.model");
+let Project = require(".././MODELS/project.model");
 let constants = require(".././UTILS/constants");
 
 module.exports = { createSkill, getAllSkills, deleteSkill, updateSkill };
@@ -103,6 +104,10 @@ async function deleteSkill(req, res) {
     }
 
     await Skill.deleteOne({ _id });
+    await Project.updateMany(
+      { "techStack.techId": _id },
+      { $pull: { techStack: { techId: _id } } }
+    );
 
     res.send({
       success: true,

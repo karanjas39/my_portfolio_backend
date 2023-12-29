@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: true, limit: "12kb" }));
 // );
 
 // ROUTES
-app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/admin/developer", adminRouter);
 app.use("/api/v1/user", userRouter);
 
 // UNHANDLED ROUTES
