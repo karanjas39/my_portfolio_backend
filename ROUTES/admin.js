@@ -11,7 +11,7 @@ const edu_controllers = require(".././CONTROLLERS/education.controllers");
 const project_controllers = require(".././CONTROLLERS/project.controllers");
 const socialMedia_controllers = require(".././CONTROLLERS/socialMedia.controller");
 const contributionRequest_controllers = require(".././CONTROLLERS/contributionRequest.controllers");
-const sendEmail_controller = require(".././UTILS/sendEmail");
+const contact_controllers = require(".././CONTROLLERS/contact.controllers");
 
 const upload = require(".././UTILS/fileUpload");
 
@@ -89,6 +89,7 @@ router
 // PROJECT ROUTES
 router.route("/project/all").get(project_controllers.getAllProject);
 router.route("/project/search").get(project_controllers.searchProject);
+router.route("/project/filter").post(project_controllers.filterProject);
 router.route("/project/one").get(project_controllers.getProject);
 router
   .route("/project/add")
@@ -116,17 +117,22 @@ router
 
 // CONTRIBUTION REQUEST ROUTES
 router
-  .route("/project/contribution/add")
-  .post(contributionRequest_controllers.createContributionRequest);
-router
   .route("/project/contribution/delete")
-  .post(contributionRequest_controllers.deleteContributionRequest);
+  .post(
+    middlewares.verifyAdmin,
+    contributionRequest_controllers.deleteContributionRequest
+  );
 router
   .route("/project/contribution/all")
   .get(contributionRequest_controllers.getAllContributionRequest);
 router
-  .route("/project/contribution/one")
+  .route("/project/contribution/search")
   .get(contributionRequest_controllers.searchContributionRequest);
+
+// CONTACTS ROUTES
+router.route("/contact/delete").post(contact_controllers.deleteContact);
+router.route("/contact/all").get(contact_controllers.getAllContact);
+router.route("/contact/search").get(contact_controllers.searchContact);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);

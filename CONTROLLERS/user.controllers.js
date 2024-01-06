@@ -53,7 +53,7 @@ async function login_user(req, res) {
       success: true,
       status: 200,
       token,
-      path: "./admin.html",
+      path: "../HTML/admin.html",
     });
   } catch (error) {
     console.log(`Error: ${error.toString()} in login_user`);

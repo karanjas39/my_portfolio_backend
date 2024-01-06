@@ -1,8 +1,7 @@
 const nodemailer = require("nodemailer");
 
-async function sendEmail(req, res) {
+async function sendEmail(email, subject, html) {
   try {
-    const { email, subject, html } = req.body;
     let invalidFields = [];
     if (!email) {
       invalidFields.push("email");
@@ -14,12 +13,9 @@ async function sendEmail(req, res) {
       invalidFields.push("html");
     }
     if (invalidFields.length != 0) {
-      return res.send({
-        success: false,
-        status: 404,
-        message: `Required: ${invalidFields.join(", ")}`,
-      });
+      throw new Error(`Required: ${invalidFields.join(", ")}`);
     }
+
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -38,19 +34,21 @@ async function sendEmail(req, res) {
       html,
     };
 
-    await transporter.sendMail(mailOptions);
-    return res.send({
+    const info = await transporter.sendMail(mailOptions);
+
+    return {
       success: true,
       status: 200,
       message: "Email sent successfully.",
-    });
+      info: info,
+    };
   } catch (error) {
-    res.send({
+    return {
       success: false,
       status: 500,
-      message: `Email not sent.`,
+      message: `Email not sent: ${error.message}`,
       error: error.toString() + " in sendEmail",
-    });
+    };
   }
 }
 

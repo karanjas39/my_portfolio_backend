@@ -1,3 +1,5 @@
+const contactFromField = ["Portfolio"];
+
 // LOGIN
 const invalidCreds =
   "Invalid credentials. Please double-check your username and password.";
@@ -56,6 +58,7 @@ const projectLinkDeleted = "Project link deleted successfully.";
 const projectTechDeleted = "Project Tech Stack is deleted successfully.";
 const projectUpdated = "Project updated successfully.";
 const searchQuery = "Search Query is required.";
+const projectFilterRequired = "Project filter rquired";
 
 // SOCIAL MEDIA
 const socialMediaNotCreated = "New Social Media cannot be created.";
@@ -67,6 +70,7 @@ const socialMediaUpdated = "Social Media updated successfully.";
 // GENERAL
 const _idRequired = "_id is required";
 const tooManyRequests = "Rate limit exceeded. Please try again later.";
+const myEmail = "dhillonjaskaran4486@gmail.com";
 
 // CONTRIBUTION REQUESTS
 const contributionRequestNotCreated =
@@ -75,6 +79,36 @@ const contributionRequestAlreadyCreated =
   "This contribution request is already created.";
 const noContributionRequestFound = "No contribution request found.";
 const contributionRequestDeleted = "Contribution request deleted successfully.";
+
+// EMAIL
+const newProjectContributionEmail = {
+  title: "Collaboration Opportunity: {project_name} Contribution Request",
+  content: `You've received a contribution request for your project, {project_name} from {contributor_name}. Check it out and collaborate with {contributor_name} to enhance the project further.<br />Click <a href="mailto:{contributor_email}" style="color: #c07f00;">here</a>
+    to send an email to {contributor_name}.<br />
+    Click <a href="https://wa.me/{whatsapp_number}" style="color: #c07f00;">here</a>
+    to send a WhatsApp message to {contributor_name}.`,
+  subject: "Contribution Request for {project_name}!!",
+};
+
+const newFormSubmissionEmail = {
+  title: "New Form Submission: {source}",
+  content: `{name} has submitted a form on your website. Below are the details:
+  <br /><br />
+  <strong>Name:</strong> {name}
+  <br />
+  <strong>Email:</strong> {email}
+  <br />
+  <strong>Message:</strong> {message} <br /><br />
+  Please review the details and respond accordingly.`,
+};
+
+// CONTACTS
+const contactNotCreated = "New contact cannot be created.";
+const noContactFound = "No contact found.";
+const contactDeleted = "Contact deleted successfully.";
+const invalidContactForm =
+  "Not expecting any contact form submissions from this source.";
+const contactCreated = "Contact created successfully.";
 
 module.exports = {
   tooManyRequests,
@@ -112,6 +146,7 @@ module.exports = {
   projectTechCreated,
   projectDeleted,
   projectLinkDeleted,
+  projectFilterRequired,
   projectTechDeleted,
   noProjectFound,
   projectUpdated,
@@ -126,4 +161,13 @@ module.exports = {
   contributionRequestNotCreated,
   contributionRequestDeleted,
   noContributionRequestFound,
+  newFormSubmissionEmail,
+  newProjectContributionEmail,
+  myEmail,
+  contactDeleted,
+  contactFromField,
+  contactNotCreated,
+  contactCreated,
+  invalidContactForm,
+  noContactFound,
 };

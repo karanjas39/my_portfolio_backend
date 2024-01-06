@@ -1,7 +1,7 @@
-// @collapse
 const Project = require(".././MODELS/project.model");
 const ContributionRequest = require(".././MODELS/contributionRequest.model");
 const constants = require(".././UTILS/constants");
+const { finished } = require("nodemailer/lib/xoauth2");
 
 module.exports = {
   createProject,
@@ -10,6 +10,7 @@ module.exports = {
   getAllProject,
   getProject,
   searchProject,
+  filterProject,
 };
 
 async function createProject(req, res) {
@@ -78,6 +79,7 @@ async function createProject(req, res) {
         message: constants.projectNotCreated,
       });
     }
+
     res.send({
       success: true,
       status: 200,
@@ -285,6 +287,67 @@ async function searchProject(req, res) {
       success: false,
       status: 500,
       message: `Error: ${error.toString()} in searchProject`,
+    });
+  }
+}
+
+async function filterProject(req, res) {
+  try {
+    let { filter, options = "", startPoint = 0 } = req.body;
+    let query = {};
+    if (Object.keys(filter).length == 0) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants._idRequired,
+      });
+    }
+    if (!!filter.techStack) {
+      query["techStack.techId"] = filter.techStack;
+    }
+    if (!!filter.contributorName) {
+      query.contributors = { $regex: new RegExp(filter.contributorName, "i") };
+    }
+    if (!!filter.startedOn) {
+      query.startedOn = { $gte: filter.startedOn };
+    }
+    if (!!filter.finishedOn) {
+      query.finishedOn = filter.finishedOn;
+    }
+    if (!!filter.createdAt) {
+      query.createdAt = { $gte: filter.createdAt };
+    }
+    if (!!filter.updatedAt) {
+      query.updatedAt = { $gte: filter.updatedAt };
+    }
+    if (filter.hasOwnProperty("active")) {
+      query.active = filter.active;
+    }
+
+    let projects = await Project.find(query)
+      .select(options)
+      .skip(startPoint)
+      .limit(5);
+
+    if (projects.length == 0) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.noProjectFound,
+      });
+    }
+
+    res.send({
+      success: true,
+      status: 200,
+      projects,
+      nextStartPoint: startPoint + 5,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      status: 500,
+      message: `Error: ${error.toString()} in filterProject`,
     });
   }
 }

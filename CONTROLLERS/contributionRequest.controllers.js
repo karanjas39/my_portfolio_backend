@@ -1,4 +1,6 @@
 const ContributionRequest = require(".././MODELS/contributionRequest.model");
+const sendEmail = require(".././UTILS/sendEmail");
+const modifyTemplate = require(".././UTILS/modifyEmailTemplate");
 const Project = require(".././MODELS/project.model");
 const constants = require(".././UTILS/constants");
 
@@ -33,7 +35,10 @@ async function createContributionRequest(req, res) {
       });
     }
 
-    let isProject = await Project.findOne({ _id: project_id });
+    let isProject = await Project.findOne({
+      _id: project_id,
+      active: true,
+    }).select("title");
 
     if (!isProject) {
       return res.send({
@@ -44,7 +49,13 @@ async function createContributionRequest(req, res) {
     }
 
     let isContributionRequest = await ContributionRequest.findOne({
-      $or: [{ email }, { whatsapp_number }],
+      $or: [
+        {
+          email,
+          project_id,
+        },
+        { whatsapp_number, project_id },
+      ],
     });
 
     if (!!isContributionRequest) {
@@ -60,6 +71,7 @@ async function createContributionRequest(req, res) {
       project_id,
       whatsapp_number,
     });
+
     if (!contributionRequest) {
       return res.send({
         success: true,
@@ -68,10 +80,32 @@ async function createContributionRequest(req, res) {
       });
     }
 
+    const projectContributionObject = constants.newProjectContributionEmail;
+    let title = projectContributionObject.title.replace(
+      "{project_name}",
+      isProject.title
+    );
+    let subject = projectContributionObject.subject.replace(
+      "{project_name}",
+      isProject.title
+    );
+    let content = projectContributionObject.content.replace(
+      "{project_name}",
+      isProject.title
+    );
+    content = content.replace(/{contributor_name}/g, name);
+    content = content.replace("{whatsapp_number}", whatsapp_number);
+    content = content.replace("{contributor_email}", email);
+
+    const html = modifyTemplate(title, "Jaskaran Singh", content);
+
+    let isEmailSend = await sendEmail(constants.myEmail, subject, html);
+
     res.send({
       success: true,
       status: 200,
       contributionRequest,
+      isEmailSend,
     });
   } catch (error) {
     res.send({
@@ -121,6 +155,7 @@ async function deleteContributionRequest(req, res) {
 async function searchContributionRequest(req, res) {
   try {
     let { query, startPoint = 0, project_id } = req.query;
+    let results;
     let invalidFields = [];
     if (!query) {
       invalidFields.push("query");
@@ -161,11 +196,27 @@ async function searchContributionRequest(req, res) {
       });
     }
 
+    if (startPoint == 0) {
+      results = await ContributionRequest.countDocuments({
+        $or: [
+          {
+            name: { $regex: regex },
+            project_id,
+          },
+          {
+            email: { $regex: regex },
+            project_id,
+          },
+        ],
+      });
+    }
+
     res.send({
       success: true,
       status: 200,
       contributionRequests,
       nextStartPoint: Number(startPoint) + 5,
+      results,
     });
   } catch (error) {
     res.send({
@@ -179,6 +230,7 @@ async function searchContributionRequest(req, res) {
 async function getAllContributionRequest(req, res) {
   try {
     let { project_id, startPoint = 0 } = req.query;
+    let results;
     if (!project_id) {
       return res.send({
         success: false,
@@ -190,9 +242,9 @@ async function getAllContributionRequest(req, res) {
     let contributionRequests = await ContributionRequest.find({
       project_id,
     })
-      .skip(Number(startPoint))
-      .limit(5)
-      .sort({ createdAt: -1 });
+      .skip(startPoint)
+      .limit(5);
+    // .sort({ createdAt: -1 });
 
     if (contributionRequests.length == 0) {
       return res.send({
@@ -202,11 +254,16 @@ async function getAllContributionRequest(req, res) {
       });
     }
 
+    if (startPoint == 0) {
+      results = await ContributionRequest.countDocuments({ project_id });
+    }
+
     res.send({
       success: true,
       status: 200,
       contributionRequests,
       nextStartPoint: Number(startPoint) + 5,
+      results,
     });
   } catch (error) {
     res.send({
