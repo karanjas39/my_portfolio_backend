@@ -8,6 +8,7 @@ const skills_controllers = require(".././CONTROLLERS/skill.controllers");
 const experience_controllers = require(".././CONTROLLERS/experience.controllers");
 const edu_controllers = require(".././CONTROLLERS/education.controllers");
 const project_controllers = require(".././CONTROLLERS/project.controllers");
+const socialMedia_controllers = require(".././CONTROLLERS/socialMedia.controller");
 const contributionRequest_controllers = require(".././CONTROLLERS/contributionRequest.controllers");
 const contact_controllers = require(".././CONTROLLERS/contact.controllers");
 
@@ -34,8 +35,15 @@ router
 // EDUCATION ROUTES
 router.route("/developer/education/all").get(edu_controllers.getAllEducation);
 
+// SOCIAL MEDIA
+router
+  .route("/socialmedia/all")
+  .get(socialMedia_controllers.getSocialMediaLinks);
+
 // PROJECT ROUTES
-router.route("/developer/project/all").get(project_controllers.getAllProject);
+router
+  .route("/developer/project/all")
+  .get(project_controllers.getAllProjectUser);
 router
   .route("/developer/project/search")
   .get(project_controllers.searchProject);

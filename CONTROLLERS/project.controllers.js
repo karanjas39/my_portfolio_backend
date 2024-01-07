@@ -9,6 +9,7 @@ module.exports = {
   updateProject,
   getAllProject,
   getProject,
+  getAllProjectUser,
   searchProject,
   filterProject,
 };
@@ -173,6 +174,38 @@ async function getAllProject(req, res) {
   try {
     let { startPoint = 0, options = "" } = req.query;
     let projects = await Project.find()
+      .skip(startPoint)
+      .limit(5)
+      .select(options)
+      .sort({ createdAt: -1 });
+
+    if (projects.length == 0) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.noProjectFound,
+      });
+    }
+
+    res.send({
+      success: true,
+      status: 200,
+      projects,
+      nextStartPoint: Number(startPoint) + 5,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      status: 500,
+      message: `Error: ${error.toString()} in getAllProject`,
+    });
+  }
+}
+
+async function getAllProjectUser(req, res) {
+  try {
+    let { startPoint = 0, options = "" } = req.query;
+    let projects = await Project.find({ active: true })
       .skip(startPoint)
       .limit(5)
       .select(options)

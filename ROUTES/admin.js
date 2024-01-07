@@ -104,7 +104,7 @@ router
 // SOCIAL MEDIA ROUTES
 router
   .route("/socialmedia/all")
-  .post(socialMedia_controllers.getSocialMediaLinks);
+  .get(socialMedia_controllers.getSocialMediaLinks);
 router
   .route("/socialmedia/add")
   .post(middlewares.verifyAdmin, socialMedia_controllers.createSocialMedia);

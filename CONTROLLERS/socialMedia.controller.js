@@ -141,7 +141,8 @@ async function updateSocialMedia(req, res) {
 }
 async function getSocialMediaLinks(req, res) {
   try {
-    let socialMediaLinks = await SocialMedia.find();
+    let { options = "" } = req.body;
+    let socialMediaLinks = await SocialMedia.find().select(options);
 
     if (socialMediaLinks.length == 0) {
       return res.send({
