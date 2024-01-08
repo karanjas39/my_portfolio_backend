@@ -4,7 +4,8 @@
   "description": "This is the backend of my dynamic portfolio.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "npm server.js"
   },
   "author": "Jaskaran Singh Dhillon",
   "license": "ISC",

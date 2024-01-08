@@ -46,10 +46,10 @@ router
   .get(project_controllers.getAllProjectUser);
 router
   .route("/developer/project/search")
-  .get(project_controllers.searchProject);
+  .get(project_controllers.searchProjectUser);
 router
   .route("/developer/project/filter")
-  .post(project_controllers.filterProject);
+  .post(project_controllers.filterProjectUser);
 
 router.route("/developer/project/one").get(project_controllers.getProject);
 

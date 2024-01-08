@@ -11,7 +11,9 @@ module.exports = {
   getProject,
   getAllProjectUser,
   searchProject,
+  searchProjectUser,
   filterProject,
+  filterProjectUser,
 };
 
 async function createProject(req, res) {
@@ -285,7 +287,7 @@ async function searchProject(req, res) {
       });
     }
 
-    const regex = new RegExp(query, "gi");
+    const regex = new RegExp(query, "i");
 
     const projects = await Project.find({
       $or: [
@@ -324,15 +326,66 @@ async function searchProject(req, res) {
   }
 }
 
+async function searchProjectUser(req, res) {
+  try {
+    let { query, options = "", startPoint = 0 } = req.query;
+    if (!query) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.searchQuery,
+      });
+    }
+
+    const regex = new RegExp(query, "i");
+
+    const projects = await Project.find({
+      $or: [
+        { title: { $regex: regex }, active: true },
+        { brief_description: { $regex: regex }, active: true },
+        { detailed_description: { $regex: regex }, active: true },
+      ],
+    })
+      .populate({
+        path: "techStack.techId",
+        select: "name",
+      })
+      .skip(startPoint)
+      .limit(5)
+      .select(options);
+
+    if (projects.length == 0) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.noProjectFound,
+      });
+    }
+
+    res.send({
+      success: true,
+      status: 200,
+      projects,
+      nextStartPoint: Number(startPoint) + 5,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      status: 500,
+      message: `Error: ${error.toString()} in searchProject`,
+    });
+  }
+}
+
 async function filterProject(req, res) {
   try {
     let { filter, options = "", startPoint = 0 } = req.body;
     let query = {};
-    if (Object.keys(filter).length == 0) {
+    if (!filter || Object.keys(filter).length == 0) {
       return res.send({
         success: false,
         status: 404,
-        message: constants._idRequired,
+        message: constants.projectFilterRequired,
       });
     }
     if (!!filter.techStack) {
@@ -375,6 +428,66 @@ async function filterProject(req, res) {
       status: 200,
       projects,
       nextStartPoint: startPoint + 5,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      status: 500,
+      message: `Error: ${error.toString()} in filterProject`,
+    });
+  }
+}
+
+async function filterProjectUser(req, res) {
+  try {
+    let { filter, options = "", startPoint = 0 } = req.body;
+    let query = {};
+    if (!filter || Object.keys(filter).length == 0) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.projectFilterRequired,
+      });
+    }
+    if (!!filter.techStack) {
+      query["techStack.techId"] = filter.techStack;
+    }
+    if (!!filter.contributorName) {
+      query.contributors = { $regex: new RegExp(filter.contributorName, "i") };
+    }
+    if (!!filter.startedOn) {
+      query.startedOn = { $gte: filter.startedOn };
+    }
+    if (!!filter.finishedOn) {
+      query.finishedOn = { $lte: filter.finishedOn };
+    }
+    if (filter.hasOwnProperty("active")) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.noProjectFound,
+      });
+    }
+
+    let projects = await Project.find({ ...query, active: true })
+      .select(options)
+      .skip(startPoint)
+      .limit(5);
+
+    if (projects.length == 0) {
+      return res.send({
+        success: false,
+        status: 404,
+        message: constants.noProjectFound,
+      });
+    }
+
+    res.send({
+      success: true,
+      status: 200,
+      projects,
+      nextStartPoint: startPoint + 5,
+      startPoint,
     });
   } catch (error) {
     res.send({

@@ -24,6 +24,8 @@ function getUrlAndInjectCode(req, res, next) {
       url == "/api/v1/user/developer/project/search"
     ) {
       req.query.options = "title brief_description";
+    } else if (url == "/api/v1/user/developer/project/filter") {
+      req.body.options = "title brief_description";
     } else if (url == "/api/v1/user/developer/project/one") {
       req.query.options =
         "title brief_description detailed_description links techStack contributors startedOn finishedOn";
