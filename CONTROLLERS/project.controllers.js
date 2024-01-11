@@ -175,11 +175,12 @@ async function updateProject(req, res) {
 async function getAllProject(req, res) {
   try {
     let { startPoint = 0, options = "" } = req.query;
+    let result = 0;
     let projects = await Project.find()
       .skip(startPoint)
       .limit(5)
       .select(options)
-      .sort({ createdAt: -1 });
+      .sort({ title: 1 });
 
     if (projects.length == 0) {
       return res.send({
@@ -188,12 +189,15 @@ async function getAllProject(req, res) {
         message: constants.noProjectFound,
       });
     }
-
+    if (startPoint == 0) {
+      result = await Project.countDocuments();
+    }
     res.send({
       success: true,
       status: 200,
       projects,
       nextStartPoint: Number(startPoint) + 5,
+      result,
     });
   } catch (error) {
     res.send({
@@ -279,6 +283,8 @@ async function getProject(req, res) {
 async function searchProject(req, res) {
   try {
     let { query, options = "", startPoint = 0 } = req.query;
+    let result = 0;
+
     if (!query) {
       return res.send({
         success: false,
@@ -311,11 +317,21 @@ async function searchProject(req, res) {
       });
     }
 
+    if (startPoint == 0) {
+      result = await Project.countDocuments({
+        $or: [
+          { title: { $regex: regex } },
+          { brief_description: { $regex: regex } },
+        ],
+      });
+    }
+
     res.send({
       success: true,
       status: 200,
       projects,
       nextStartPoint: Number(startPoint) + 5,
+      result,
     });
   } catch (error) {
     res.send({
@@ -380,6 +396,8 @@ async function searchProjectUser(req, res) {
 async function filterProject(req, res) {
   try {
     let { filter, options = "", startPoint = 0 } = req.body;
+    let result = 0;
+
     let query = {};
     if (!filter || Object.keys(filter).length == 0) {
       return res.send({
@@ -422,12 +440,16 @@ async function filterProject(req, res) {
         message: constants.noProjectFound,
       });
     }
+    if (startPoint == 0) {
+      result = await Project.countDocuments(query);
+    }
 
     res.send({
       success: true,
       status: 200,
       projects,
       nextStartPoint: startPoint + 5,
+      result,
     });
   } catch (error) {
     res.send({

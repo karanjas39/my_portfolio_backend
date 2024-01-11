@@ -130,9 +130,12 @@ router
   .get(contributionRequest_controllers.searchContributionRequest);
 
 // CONTACTS ROUTES
-router.route("/contact/delete").post(contact_controllers.deleteContact);
+router
+  .route("/contact/delete")
+  .post(middlewares.verifyAdmin, contact_controllers.deleteContact);
 router.route("/contact/all").get(contact_controllers.getAllContact);
 router.route("/contact/search").get(contact_controllers.searchContact);
+router.route("/contact/filter").post(contact_controllers.filterContact);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);
