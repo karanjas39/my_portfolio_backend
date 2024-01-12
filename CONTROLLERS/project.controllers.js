@@ -1,7 +1,6 @@
 const Project = require(".././MODELS/project.model");
 const ContributionRequest = require(".././MODELS/contributionRequest.model");
 const constants = require(".././UTILS/constants");
-const { finished } = require("nodemailer/lib/xoauth2");
 
 module.exports = {
   createProject,
