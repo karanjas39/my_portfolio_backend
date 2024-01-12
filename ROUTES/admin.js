@@ -21,6 +21,12 @@ router.route("/login").post(user_controllers.login_user);
 
 router.use(middlewares.tokenVerification);
 
+// USER ROUTES
+router.route("/password/change/initial").post(user_controllers.changePassword);
+router
+  .route("/password/change/final")
+  .post(user_controllers.confirmOtpAndChangePassword);
+
 // DEVELOPER ROUTES
 router.route("/details").get(developer_controllers.getDeveloperDetails);
 

@@ -4,6 +4,9 @@ const contactFromField = ["Portfolio"];
 const invalidCreds =
   "Invalid credentials. Please double-check your username and password.";
 
+const chnagePassOtpNotSent = "Failed to send the OTP. Try again later.";
+const chnagePasswordOtpSent = "Check your email for the OTP and enter it.";
+
 //ROUTES
 const invalidEndpoint = "Invalid endpoint. This API endpoint does not exist.";
 
@@ -90,6 +93,14 @@ const newProjectContributionEmail = {
   subject: "Contribution Request for {project_name}!!",
 };
 
+const changePasswordEmail = {
+  title: "Password Reset OTP",
+  content: `<p>You've requested to reset your password. Please use the following OTP to reset your password:</p>
+  <h3>{otp}</h3>
+  <p>This OTP is valid for 5 minutes. Do not share it with others.</p>`,
+  subject: "Password Reset OTP",
+};
+
 const newFormSubmissionEmail = {
   title: "New Form Submission: {source}",
   content: `{name} has submitted a form on your website. Below are the details:
@@ -113,6 +124,8 @@ const contactCreated = "Contact created successfully.";
 module.exports = {
   tooManyRequests,
   invalidCreds,
+  chnagePassOtpNotSent,
+  chnagePasswordOtpSent,
   invalidEndpoint,
   unauthorizedAccess,
   tokenRequired,
@@ -163,6 +176,7 @@ module.exports = {
   noContributionRequestFound,
   newFormSubmissionEmail,
   newProjectContributionEmail,
+  changePasswordEmail,
   myEmail,
   contactDeleted,
   contactFromField,
