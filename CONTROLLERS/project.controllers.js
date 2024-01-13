@@ -210,6 +210,7 @@ async function getAllProject(req, res) {
 async function getAllProjectUser(req, res) {
   try {
     let { startPoint = 0, options = "" } = req.query;
+    let result = 0;
     let projects = await Project.find({ active: true })
       .skip(startPoint)
       .limit(5)
@@ -224,11 +225,16 @@ async function getAllProjectUser(req, res) {
       });
     }
 
+    if (startPoint == 0) {
+      result = await Project.countDocuments({ active: true });
+    }
+
     res.send({
       success: true,
       status: 200,
       projects,
       nextStartPoint: Number(startPoint) + 5,
+      result,
     });
   } catch (error) {
     res.send({
@@ -344,6 +350,7 @@ async function searchProject(req, res) {
 async function searchProjectUser(req, res) {
   try {
     let { query, options = "", startPoint = 0 } = req.query;
+    let result = 0;
     if (!query) {
       return res.send({
         success: false,
@@ -377,11 +384,22 @@ async function searchProjectUser(req, res) {
       });
     }
 
+    if (startPoint == 0) {
+      result = await Project.countDocuments({
+        $or: [
+          { title: { $regex: regex }, active: true },
+          { brief_description: { $regex: regex }, active: true },
+          { detailed_description: { $regex: regex }, active: true },
+        ],
+      });
+    }
+
     res.send({
       success: true,
       status: 200,
       projects,
       nextStartPoint: Number(startPoint) + 5,
+      result,
     });
   } catch (error) {
     res.send({
@@ -462,6 +480,7 @@ async function filterProject(req, res) {
 async function filterProjectUser(req, res) {
   try {
     let { filter, options = "", startPoint = 0 } = req.body;
+    let result = 0;
     let query = {};
     if (!filter || Object.keys(filter).length == 0) {
       return res.send({
@@ -503,12 +522,17 @@ async function filterProjectUser(req, res) {
       });
     }
 
+    if (startPoint == 0) {
+      result = await Project.countDocuments({ ...query, active: true });
+    }
+
     res.send({
       success: true,
       status: 200,
       projects,
       nextStartPoint: startPoint + 5,
       startPoint,
+      result,
     });
   } catch (error) {
     res.send({
