@@ -31,7 +31,7 @@ app.use("/api/v1/admin/developer", cors(corsOptions), adminRouter);
 app.use("/api/v1/user", cors(corsOptions), userRouter);
 
 // FOR CONTACTS
-app.route("/api/v1/user/contact/add").post(contactRoutes.createContact);
+app.route("/api/v1/contact/add").post(contactRoutes.createContact);
 
 // UNHANDLED ROUTES
 app.route("*").all(unhandledRoutes.unhandleRoutes);
