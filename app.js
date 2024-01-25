@@ -41,7 +41,9 @@ app.use(
   cors({ origin: process.env.CORS_ORIGIN_USER }),
   userRouter
 );
-app.use("/api/v1/contact/add", cors(), contact_controllers.createContact);
+
+app.route("/api/v1/contact/add").post(contact_controllers.createContact);
+// app.use("/api/v1/contact/add", cors(), contact_controllers.createContact);
 
 // UNHANDLED ROUTES
 app.route("*").all(unhandledRoutes.unhandleRoutes);
