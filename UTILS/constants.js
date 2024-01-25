@@ -1,4 +1,4 @@
-const contactFromField = ["Portfolio"];
+const contactFromField = ["Portfolio", "Opentalks"];
 
 // LOGIN
 const invalidCreds =

@@ -10,6 +10,7 @@ const adminRouter = require("./ROUTES/admin");
 const userRouter = require("./ROUTES/user");
 const unhandledRoutes = require("./UTILS/unhandledRoutes");
 const constants = require("./UTILS/constants");
+const contact_controllers = require("./CONTROLLERS/contact.controllers");
 
 // CONFIGURATION
 app.use(express.static(path.join(__dirname, "public")));
@@ -40,6 +41,8 @@ app.use(
   cors({ origin: process.env.CORS_ORIGIN_USER }),
   userRouter
 );
+
+app.route("/api/v1/contact/add").post(contact_controllers.createContact);
 
 // UNHANDLED ROUTES
 app.route("*").all(unhandledRoutes.unhandleRoutes);

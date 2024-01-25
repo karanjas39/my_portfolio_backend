@@ -10,7 +10,6 @@ const edu_controllers = require(".././CONTROLLERS/education.controllers");
 const project_controllers = require(".././CONTROLLERS/project.controllers");
 const socialMedia_controllers = require(".././CONTROLLERS/socialMedia.controller");
 const contributionRequest_controllers = require(".././CONTROLLERS/contributionRequest.controllers");
-const contact_controllers = require(".././CONTROLLERS/contact.controllers");
 
 const middlewares = require(".././MIDDLEWARES/user.middleware");
 
@@ -57,9 +56,6 @@ router.route("/developer/project/one").get(project_controllers.getProject);
 router
   .route("/project/contribution/add")
   .post(contributionRequest_controllers.createContributionRequest);
-
-// CONTACT ROUTES
-router.route("/contact/add").post(contact_controllers.createContact);
 
 // UNHANDLES ROUTES
 router.route("*").all(unhandledRoutes.unhandleRoutes);
