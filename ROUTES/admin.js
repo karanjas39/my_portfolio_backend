@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cors = require("cors");
 
 const unhandledRoutes = require(".././UTILS/unhandledRoutes");
 const user_controllers = require(".././CONTROLLERS/user.controllers");
@@ -16,6 +17,8 @@ const contact_controllers = require(".././CONTROLLERS/contact.controllers");
 const upload = require(".././UTILS/fileUpload");
 
 const middlewares = require(".././MIDDLEWARES/verification");
+
+router.use(cors({ origin: process.env.CORS_ORIGIN_ADMIN }));
 
 router.route("/login").post(user_controllers.login_user);
 

@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
@@ -10,7 +9,6 @@ const adminRouter = require("./ROUTES/admin");
 const userRouter = require("./ROUTES/user");
 const unhandledRoutes = require("./UTILS/unhandledRoutes");
 const constants = require("./UTILS/constants");
-const contact_controllers = require("./CONTROLLERS/contact.controllers");
 
 // CONFIGURATION
 app.use(express.static(path.join(__dirname, "public")));
@@ -31,19 +29,8 @@ app.use(
 );
 
 // ROUTES
-app.use(
-  "/api/v1/admin/developer",
-  cors({ origin: process.env.CORS_ORIGIN_ADMIN }),
-  adminRouter
-);
-app.use(
-  "/api/v1/user",
-  cors({ origin: process.env.CORS_ORIGIN_USER }),
-  userRouter
-);
-
-app.route("/api/v1/contact/add").post(contact_controllers.createContact);
-// app.use("/api/v1/contact/add", cors(), contact_controllers.createContact);
+app.use("/api/v1/admin/developer", adminRouter);
+app.use("/api/v1/user", userRouter);
 
 // UNHANDLED ROUTES
 app.route("*").all(unhandledRoutes.unhandleRoutes);

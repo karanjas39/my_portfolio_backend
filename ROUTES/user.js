@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cors = require("cors");
 
 const unhandledRoutes = require(".././UTILS/unhandledRoutes");
 const developer_controllers = require(".././CONTROLLERS/developer.controllers");
@@ -10,8 +11,14 @@ const edu_controllers = require(".././CONTROLLERS/education.controllers");
 const project_controllers = require(".././CONTROLLERS/project.controllers");
 const socialMedia_controllers = require(".././CONTROLLERS/socialMedia.controller");
 const contributionRequest_controllers = require(".././CONTROLLERS/contributionRequest.controllers");
+const contact_controllers = require(".././CONTROLLERS/contact.controllers");
 
 const middlewares = require(".././MIDDLEWARES/user.middleware");
+
+// CONTACT ROUTE
+router.route("/contact/add").post(contact_controllers.createContact);
+
+router.use(cors({ origin: process.env.CORS_ORIGIN_USER }));
 
 router.use(middlewares.getUrlAndInjectCode);
 
