@@ -31,9 +31,7 @@ app.use(
 );
 
 // ROUTES
-
-app.route("/api/v1/contact/add").post(contact_controllers.createContact);
-
+app.use("/api/v1/contact/add", cors(), contact_controllers.createContact);
 app.use(
   "/api/v1/admin/developer",
   cors({ origin: process.env.CORS_ORIGIN_ADMIN }),
