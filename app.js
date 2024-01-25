@@ -8,9 +8,19 @@ const helmet = require("helmet");
 const adminRouter = require("./ROUTES/admin");
 const userRouter = require("./ROUTES/user");
 const unhandledRoutes = require("./UTILS/unhandledRoutes");
+const whitelist = [process.env.CORS_ORIGIN_USER, process.env.CORS_ORIGIN_ADMIN];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
 // CONFIGURATION
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(helmet());
 app.use(express.json({ limit: "12kb" }));
