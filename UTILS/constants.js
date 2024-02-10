@@ -1,4 +1,4 @@
-const contactFromField = ["Portfolio", "Opentalks", "HealthHealer.ai"];
+const contactFromField = ["Portfolio", "Opentalks", "HealthHealer.ai", "Lernn"];
 
 // LOGIN
 const invalidCreds =
