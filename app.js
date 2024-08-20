@@ -27,8 +27,8 @@ app.use(express.json({ limit: "12kb" }));
 app.use(express.urlencoded({ extended: true, limit: "12kb" }));
 
 // ROUTES
-app.use("/api/v1/admin/developer", cors(corsOptions), adminRouter);
-app.use("/api/v1/user", cors(corsOptions), userRouter);
+app.use("/api/v1/admin/developer", cors(), adminRouter);
+app.use("/api/v1/user", cors(), userRouter);
 
 // FOR CONTACTS
 app.use("/api/v1/contact/add", cors(), contactRoutes.createContact);
